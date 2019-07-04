@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 cd $HOME
 /bin/tcsh -l

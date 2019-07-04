@@ -8,3 +8,4 @@ build/
 cbsd.conf
 site.retry
 vars.mk
+libmaolan

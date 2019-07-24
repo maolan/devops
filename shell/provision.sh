@@ -2,7 +2,7 @@
 
 MY_PATH=`dirname $0`
 
-pkg install -y ccache xorg font-adobe-100dpi git-lite autoconf libsndfile pugixml
+pkg install -y ccache xorg font-adobe-100dpi git-lite autoconf libsndfile pugixml zita-resampler
 cp ${MY_PATH}/.cshrc ~devel/.cshrc
 chown devel:devel ~devel/.cshrc
 

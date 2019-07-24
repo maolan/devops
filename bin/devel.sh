@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd $HOME
+cd /usr/src
 /bin/tcsh -l

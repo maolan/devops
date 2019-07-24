@@ -1,4 +1,5 @@
 SERVICE = maolan
+XORG = YES
 REGGAE_PATH := /usr/local/share/reggae
 
 .if exists(provisioners.mk)

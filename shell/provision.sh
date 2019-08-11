@@ -2,7 +2,7 @@
 
 MY_PATH=`dirname $0`
 
-pkg install -y ccache xorg font-adobe-100dpi git-lite autoconf libsndfile pugixml zita-resampler
+pkg install -y ccache xorg font-adobe-100dpi git-lite autoconf libsndfile pugixml zita-resampler gmake
 cp ${MY_PATH}/.cshrc ~devel/.cshrc
 chown devel:devel ~devel/.cshrc
 
@@ -14,4 +14,9 @@ fi
 if [ ! -d /usr/src/maolan ]; then
   git clone https://github.com/maolan/maolan /usr/src/maolan
   chown -R devel:devel /usr/src/maolan
+fi
+
+if [ ! -d /usr/src/gnui ]; then
+  git clone https://github.com/fisean/gnui /usr/src/gnui
+  chown -R devel:devel /usr/src/gnui
 fi

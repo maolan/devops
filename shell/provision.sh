@@ -10,3 +10,8 @@ if [ ! -d /usr/src/libmaolan ]; then
   git clone https://github.com/maolan/libmaolan /usr/src/libmaolan
   chown -R devel:devel /usr/src/libmaolan
 fi
+
+if [ ! -d /usr/src/maolan ]; then
+  git clone https://github.com/maolan/maolan /usr/src/maolan
+  chown -R devel:devel /usr/src/maolan
+fi

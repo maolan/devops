@@ -2,7 +2,19 @@
 
 MY_PATH=`dirname $0`
 
-pkg install -y ccache xorg font-adobe-100dpi git-lite autoconf libsndfile pugixml zita-resampler gmake
+pkg install -y \
+  autoconf \
+  ccache \
+  font-adobe-100dpi \
+  git-lite \
+  gmake \
+  libsndfile \
+  lilv \
+  pkgconf \
+  pugixml \
+  xorg \
+  zita-resampler
+
 cp ${MY_PATH}/.cshrc ~devel/.cshrc
 chown devel:devel ~devel/.cshrc
 

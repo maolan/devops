@@ -3,11 +3,11 @@
 MY_PATH=`dirname $0`
 
 pkg install -y \
-  autoconf \
   ccache \
+  cmake \
   font-adobe-100dpi \
   git-lite \
-  gmake \
+  jackit \
   libsndfile \
   lilv \
   pkgconf \

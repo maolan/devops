@@ -3,6 +3,8 @@
 MY_PATH=`dirname $0`
 
 pkg install -y \
+  alsa-lib \
+  alsa-plugins \
   ccache \
   cmake \
   font-adobe-100dpi \

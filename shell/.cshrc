@@ -21,7 +21,7 @@ set path = (/usr/local/libexec/ccache /sbin /bin /usr/sbin /usr/bin /usr/local/s
 
 setenv	EDITOR	vi
 setenv	PAGER	less
-setenv  DISPLAY 10.0.0.254:0
+setenv  DISPLAY 172.16.0.254:0
 
 if ($?prompt) then
 	# An interactive shell -- set some stuff up

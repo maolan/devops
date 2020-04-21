@@ -36,3 +36,10 @@ if [ ! -d /usr/src/gnui ]; then
   git clone https://github.com/fisean/gnui /usr/src/gnui
   chown -R devel:devel /usr/src/gnui
 fi
+
+cat <<EOF >/etc/make.conf
+WRKDIRPREFIX=/tmp
+WITH_CCACHE_BUILD=YES
+CCACHE_DIR=/usr/home/devel/.ccache
+SU_CMD=/usr/local/bin/sudo -E sh -c
+EOF

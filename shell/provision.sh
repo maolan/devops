@@ -12,8 +12,10 @@ pkg install -y \
   jackit \
   libsndfile \
   lilv \
+  libxkbcommon \
   pkgconf \
   pugixml \
+  xcb \
   xorg \
   zita-resampler
 

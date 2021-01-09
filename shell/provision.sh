@@ -7,15 +7,14 @@ pkg install -y \
   alsa-plugins \
   ccache \
   cmake \
-  font-adobe-100dpi \
+  glfw \
   git-lite \
   jackit \
   libsndfile \
+  liblo \
   lilv \
-  libxkbcommon \
   pkgconf \
   pugixml \
-  xcb \
   xorg \
   zita-resampler
 
@@ -32,9 +31,9 @@ if [ ! -d /usr/src/maolan ]; then
   chown -R devel:devel /usr/src/maolan
 fi
 
-if [ ! -d /usr/src/gnui ]; then
-  git clone https://github.com/fisean/gnui /usr/src/gnui
-  chown -R devel:devel /usr/src/gnui
+if [ ! -d /usr/src/maomix ]; then
+  git clone https://github.com/maolan/maomix /usr/src/maomix
+  chown -R devel:devel /usr/src/maomix
 fi
 
 cat <<EOF >/etc/make.conf

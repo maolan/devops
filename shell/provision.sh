@@ -13,6 +13,7 @@ pkg install -y \
   libsndfile \
   liblo \
   lilv \
+  nlohmann-json \
   pkgconf \
   pugixml \
   xorg \

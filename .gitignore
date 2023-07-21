@@ -11,7 +11,8 @@ vars.mk
 
 # Repos
 libmaolan
-libmaolanalsa
 libmaolanoss
+libmaolanalsa
+libmaolansndio
 maolan
 maomix

@@ -10,6 +10,18 @@ cd libmaolan
 git pull
 cd -
 
+cd libmaolanoss
+git pull
+cd -
+
+cd libmaolanalsa
+git pull
+cd -
+
+cd libmaolansndio
+git pull
+cd -
+
 cd maolan
 git pull
 cd -

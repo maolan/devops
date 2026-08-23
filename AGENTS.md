@@ -12,10 +12,11 @@ workspace. Each major component lives in its own subdirectory with its own
 `Cargo.toml`, `.git` history, and (where applicable) its own `AGENTS.md`.
 
 The main application is in `maolan/`. The audio engine is in `engine/`. Custom
-CLAP plugins are in `plugins/`. Reusable iced widgets are in `widgets/`.
-Out-of-process plugin hosting is implemented in `maolan/plugin-host/` and
-`plugin-protocol/`. AI audio generation tooling lives in `generate/`, and the
-project website is in `site/`.
+CLAP plugins are in `plugins/`, with LV2 support in `lv2/`. Reusable iced widgets
+are in `widgets/`. Out-of-process plugin hosting is implemented in
+`maolan/plugin-host/` and `plugin-protocol/`. AI audio generation tooling lives
+in `generate/`, backed by `llama-burn/` for local LLM inference. The standalone
+waveform editor is in `edit/`, and the project website is in `site/`.
 
 ## Repository layout
 
@@ -23,23 +24,28 @@ project website is in `site/`.
 .
 ├── baseview/           # Low-level windowing system for plugin UIs
 │                         (fork, licensed MIT OR Apache-2.0)
+├── bin/                # Helper scripts (e.g., clone-all repositories)
 ├── doc/                # User documentation (mdBook source, separate repository)
+├── edit/               # Standalone Maolan audio editor (waveform editor)
+├── engine/             # maolan-engine audio engine crate
+│   └── src/            # Engine, track processing, plugin wrappers, hardware backends
+├── generate/           # maolan-generate / HeartMuLa generation crate
+├── github/             # GitHub profile assets
+├── llama-burn/         # Llama 3 inference with Burn, vendored for maolan-generate
+├── lv2/                # Pure-Rust LV2 plugin discovery, loading, and UI support
 ├── maolan/             # Main Maolan DAW application (Cargo workspace)
 │   ├── Cargo.toml      # Workspace: members [".", "plugin-host"]
 │   ├── plugin-host/    # Out-of-process plugin host binary + library
 │   ├── src/            # Main GUI application, CLI binaries, state, workspace UI
 │   ├── assets/         # Desktop files, fonts, icons, and images
 │   ├── scripts/        # Linux build scripts and Windows PowerShell build script
-├── engine/             # maolan-engine audio engine crate
-│   └── src/            # Engine, track processing, plugin wrappers, hardware backends
-├── generate/           # maolan-generate / HeartMuLa generation crate
-├── github/             # GitHub profile assets
 ├── mixosc/             # OSC control surface for Behringer X32/X-Air mixers
 ├── plugin-protocol/    # Shared IPC protocol for out-of-process plugins
 ├── plugins/            # maolan-plugins CLAP plugin collection
 ├── site/               # Static HTML/CSS website
 ├── trainer/            # NAM-compatible model trainer
-└── vocal/              # RVC-style voice conversion scaffold
+├── vocal/              # RVC-style voice conversion scaffold
+└── widgets/            # Reusable iced UI widgets for the DAW
 ```
 
 ## Technology stack
@@ -197,8 +203,11 @@ cd baseview && cargo build && cargo test --all-targets
 
 Some subdirectories contain their own `AGENTS.md` with more specific routines:
 
+- `maolan/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy.
 - `engine/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy.
 - `plugins/AGENTS.md` — currently duplicates the `maolan` routine (clippy + fmt).
+- `edit/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy; uses
+  shared audio decode/encode paths.
 
 When working in a subdirectory, follow its local `AGENTS.md` if present, and
 update this root file if you change cross-cutting conventions.

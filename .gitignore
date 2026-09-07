@@ -1,10 +1,11 @@
 baseview/
+clap/
 doc/
 editor/
 engine/
 generate/
 github/
-llama-burn/
+llama/
 lv2/
 maolan/
 mixosc/

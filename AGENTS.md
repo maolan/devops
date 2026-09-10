@@ -15,8 +15,8 @@ The main application is in `maolan/`. The audio engine is in `engine/`. Custom
 CLAP plugins are in `plugins/`, with LV2 support in `lv2/`. Reusable iced widgets
 are in `widgets/`. Out-of-process plugin hosting is implemented in
 `maolan/plugin-host/` and `plugin-protocol/`. AI audio generation tooling lives
-in `generate/`, backed by `llama-burn/` for local LLM inference. The standalone
-waveform editor is in `edit/`, and the project website is in `site/`.
+in `generate/`, backed by `llama/` for local LLM inference. The standalone
+waveform editor is in `editor/`, and the project website is in `site/`.
 
 ## Repository layout
 
@@ -26,12 +26,12 @@ waveform editor is in `edit/`, and the project website is in `site/`.
 │                         (fork, licensed MIT OR Apache-2.0)
 ├── bin/                # Helper scripts (e.g., clone-all repositories)
 ├── doc/                # User documentation (mdBook source, separate repository)
-├── edit/               # Standalone Maolan audio editor (waveform editor)
+├── editor/             # Standalone Maolan audio editor (waveform editor)
 ├── engine/             # maolan-engine audio engine crate
 │   └── src/            # Engine, track processing, plugin wrappers, hardware backends
 ├── generate/           # maolan-generate / HeartMuLa generation crate
 ├── github/             # GitHub profile assets
-├── llama-burn/         # Llama 3 inference with Burn, vendored for maolan-generate
+├── llama/              # Llama 3 inference with Burn, vendored for maolan-generate
 ├── lv2/                # Pure-Rust LV2 plugin discovery, loading, and UI support
 ├── maolan/             # Main Maolan DAW application (Cargo workspace)
 │   ├── Cargo.toml      # Workspace: members [".", "plugin-host"]
@@ -55,15 +55,18 @@ waveform editor is in `edit/`, and the project website is in `site/`.
   features; `iced_aw`, `iced_fonts`, and `iced_drop`.
 - **Async runtime:** Tokio (full feature set in most crates).
 - **Audio backends:**
-  - Linux / FreeBSD: ALSA and JACK.
-  - Windows: WASAPI (via `cpal`).
+  - Linux: ALSA and JACK.
+  - FreeBSD: JACK and OSS.
+  - macOS: CoreAudio (audio) and CoreMIDI (MIDI).
+  - Windows: WASAPI.
 - **Plugin formats:** CLAP, VST3, LV2 (Unix only). Plugins are hosted
   out-of-process for crash isolation.
 - **Plugin UI embedding:** X11 on Unix, HWND `SetParent` on Windows.
 - **AI / ML:** Burn 0.21.0 with `ndarray` and `wgpu` backends; `hf-hub` for
   model download; `safetensors` / `burnpack` for model artifacts.
 - **Audio processing helpers:** `rubato` (resampling), `timestretch` (time/pitch),
-  `ffmpeg-next` (import/export codecs), `wide` (SIMD), `rustfft`, `rayon`.
+  `wide` (SIMD), `rustfft`, `rayon`. Import/export codecs are pure Rust
+  (`oxideav-*`, `symphonia`); no FFmpeg dependency.
 - **Website:** Static HTML/CSS (`site/`).
 
 ## Build commands
@@ -125,7 +128,11 @@ cd baseview && cargo build && cargo test --all-targets
 
 ### Platform prerequisites
 
-- **Linux / FreeBSD:** `pkg-config`, JACK/ALSA dev packages.
+- **Linux:** `pkg-config`, ALSA dev packages, JACK dev packages (for the JACK
+  backend).
+- **FreeBSD:** `pkg-config`, JACK dev package (for the JACK backend); the OSS
+  backend uses the in-kernel OSS API.
+- **macOS:** Xcode Command Line Tools.
 - **Windows:** Visual Studio Build Tools, NSIS. See
   `maolan/scripts/build.ps1` and `plugins/build.ps1` for the automated setup.
 
@@ -206,7 +213,7 @@ Some subdirectories contain their own `AGENTS.md` with more specific routines:
 - `maolan/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy.
 - `engine/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy.
 - `plugins/AGENTS.md` — currently duplicates the `maolan` routine (clippy + fmt).
-- `edit/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy; uses
+- `editor/AGENTS.md` — end-of-change clippy + fmt routine, debug-build policy; uses
   shared audio decode/encode paths.
 
 When working in a subdirectory, follow its local `AGENTS.md` if present, and

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BIN_DIR=$(dirname ${0})
-REPOS="baseview clap doc editor engine generate llama lv2 maolan mixosc plugin-protocol plugins trainer vocal widgets"
+REPOS="baseview clap doc editor engine generate llama lv2 maolan mixosc player plugin-protocol plugins trainer vocal widgets"
 
 cd "${BIN_DIR}/.."
 for repo in ${REPOS}; do

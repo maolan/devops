@@ -40,6 +40,7 @@ waveform editor is in `editor/`, and the project website is in `site/`.
 │   ├── assets/         # Desktop files, fonts, icons, and images
 │   ├── scripts/        # Linux build scripts and Windows PowerShell build script
 ├── mixosc/             # OSC control surface for Behringer X32/X-Air mixers
+├── player/             # Audio player
 ├── plugin-protocol/    # Shared IPC protocol for out-of-process plugins
 ├── plugins/            # maolan-plugins CLAP plugin collection
 ├── site/               # Static HTML/CSS website

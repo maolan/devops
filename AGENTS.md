@@ -40,6 +40,8 @@ waveform editor is in `editor/`, and the project website is in `site/`.
 │   ├── assets/         # Desktop files, fonts, icons, and images
 │   ├── scripts/        # Linux build scripts and Windows PowerShell build script
 ├── mixosc/             # OSC control surface for Behringer X32/X-Air mixers
+├── pitch/              # maolan-pitch: neural pitch detection (FCPE) and
+│                         pitch-correction resynthesis (PC-NSF-HiFiGAN) on Burn
 ├── player/             # Audio player
 ├── plugin-protocol/    # Shared IPC protocol for out-of-process plugins
 ├── plugins/            # maolan-plugins CLAP plugin collection
@@ -183,9 +185,9 @@ cd baseview && cargo build && cargo test --all-targets
 
 ## Session and storage conventions
 
-- User preferences: `~/.config/maolan/config.toml`.
-- Session templates: `~/.config/maolan/session_templates/<name>/`.
-- Track templates: `~/.config/maolan/track_templates/<name>/`.
+- User preferences: `~/.config/maolan/daw/config.toml`.
+- Session templates: `~/.config/maolan/daw/session_templates/<name>/`.
+- Track templates: `~/.config/maolan/daw/track_templates/<name>/`.
 - A session directory contains `<branch>.json`, `audio/`, `midi/`, `peaks/`,
   `pitch/`, `plugins/`, `.maolan_commits/`, and `.maolan_autosave/snapshots/`.
 - Autosave snapshots are written every 15 seconds.
@@ -239,6 +241,15 @@ update this root file if you change cross-cutting conventions.
 - Many crates are published to crates.io independently (for example
   `maolan-engine`, `maolan-widgets`, `maolan-generate`). Version bumps and
   publish steps should be coordinated across crates that depend on each other.
+- `maolan/Cargo.toml` uses `[patch.crates-io]` to build against the local
+  `../engine` (and a path dependency on `../pitch`) for cross-crate
+  development. Remove the patch section and publish `maolan-engine` before
+  publishing `maolan`.
+- `pitch/` (maolan-pitch) requires a working Vulkan GPU at runtime (Burn
+  wgpu backend, no CPU fallback). Neural models are downloaded at first use
+  from the `maolandaw` HuggingFace org (`FCPE-burn` MIT weights,
+  `PC-NSF-HiFiGAN-burn` AGPLv3 weights); overrides: `FCPE_BPK` and
+  `PC_NSF_HIFIGAN_BPK` env vars.
 - When editing one crate, check dependent crates in sibling directories for
   breakages. There is no workspace-level `cargo check --workspace` at the root;
   you must check each crate individually.

@@ -232,6 +232,9 @@ update this root file if you change cross-cutting conventions.
   dependencies, build release binaries, and produce NSIS installers.
 - **Linux packaging:** `maolan/scripts/build-ubuntu.sh`, `build-debian.sh`, and
   `build-fedora.sh` build distribution packages.
+- **macOS packaging:** `maolan/scripts/build-mac.sh` builds the release
+  binaries, assembles a signed `Maolan.app` bundle, and produces a `.dmg`
+  disk image (ad-hoc signed by default; pass `-c` for a Developer ID).
 - **Website:** `site/` is a static HTML/CSS site deployed to `https://maolan.rs/`.
 
 ## Notes for agents

@@ -136,8 +136,7 @@ cd baseview && cargo build && cargo test --all-targets
 - **FreeBSD:** `pkg-config`, JACK dev package (for the JACK backend); the OSS
   backend uses the in-kernel OSS API.
 - **macOS:** Xcode Command Line Tools.
-- **Windows:** Visual Studio Build Tools, NSIS. See
-  `maolan/scripts/build.ps1` and `plugins/build.ps1` for the automated setup.
+- **Windows:** Visual Studio Build Tools and NSIS for release packaging.
 
 ## Code style guidelines
 

@@ -62,8 +62,13 @@ waveform editor is in `editor/`, and the project website is in `site/`.
   - FreeBSD: JACK and OSS.
   - macOS: CoreAudio (audio) and CoreMIDI (MIDI).
   - Windows: WASAPI.
-- **Plugin formats:** CLAP, VST3, LV2 (Unix only). Plugins are hosted
-  out-of-process for crash isolation.
+- **Plugin formats:** CLAP, VST3, LV2 (Unix only), AudioUnit AUv2 + AUv3 (macOS only).
+  Plugins are hosted out-of-process for crash isolation. AU plugin identifiers are
+  fourcc triples (`au:<type>:<subtype>:<manufacturer>`, e.g. `au:aufx:dely:appl`),
+  discovered via the system `AudioComponent` registry, and hosted behind an `AuUnit`
+  trait in `maolan/plugin-host/src/au/` with two backends: `au/v2.rs` (pure C
+  AudioUnit) and `au/v3.rs` (`AUAudioUnit`, hand-rolled ObjC FFI). The v2/v3
+  dispatch keys off `kAudioComponentFlag_IsV3AudioUnit` in the component flags.
 - **Plugin UI embedding:** X11 on Unix, HWND `SetParent` on Windows.
 - **AI / ML:** Burn 0.21.0 with `ndarray` and `wgpu` backends; `hf-hub` for
   model download; `safetensors` / `burnpack` for model artifacts.
@@ -247,6 +252,11 @@ update this root file if you change cross-cutting conventions.
   `../engine` (and a path dependency on `../pitch`) for cross-crate
   development. Remove the patch section and publish `maolan-engine` before
   publishing `maolan`.
+- `engine/` and `maolan/plugin-host/` both build against the local
+  `plugin-protocol/` via a path dependency (AU support needs protocol
+  VERSION 8, unpublished). Publish `maolan-plugin-protocol` 0.0.18+ before
+  publishing either crate, and keep the DAW and `maolan-plugin-host` deployed
+  together since the SHM protocol version must match.
 - `pitch/` (maolan-pitch) requires a working Vulkan GPU at runtime (Burn
   wgpu backend, no CPU fallback). Neural models are downloaded at first use
   from the `maolandaw` HuggingFace org (`FCPE-burn` MIT weights,

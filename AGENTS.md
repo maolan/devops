@@ -102,6 +102,7 @@ The workspace produces the following binaries:
 
 - `maolan` (default GUI application)
 - `maolan-cli` (command-line interface)
+- `maolan-calibrate` (loopback latency calibration)
 - `maolan-osc` (small OSC transport helper)
 - `maolan-test` (engine/plugin test binary)
 - `maolan-plugin-host` (out-of-process plugin host)

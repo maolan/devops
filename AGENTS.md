@@ -14,7 +14,7 @@ workspace. Each major component lives in its own subdirectory with its own
 The main application is in `maolan/`. The audio engine is in `engine/`. Custom
 CLAP plugins are in `plugins/`, with LV2 support in `lv2/`. Reusable iced widgets
 are in `widgets/`. Out-of-process plugin hosting is implemented in
-`maolan/plugin-host/` and `plugin-protocol/`. AI audio generation tooling lives
+`plugin-host/` and `plugin-protocol/`. AI audio generation tooling lives
 in `generate/`, backed by `llama/` for local LLM inference. The standalone
 waveform editor is in `editor/`, and the project website is in `site/`.
 
@@ -35,7 +35,7 @@ waveform editor is in `editor/`, and the project website is in `site/`.
 ├── lv2/                # Pure-Rust LV2 plugin discovery, loading, and UI support
 ├── maolan/             # Main Maolan DAW application (Cargo workspace)
 │   ├── Cargo.toml      # Workspace: members [".", "plugin-host"]
-│   ├── plugin-host/    # Out-of-process plugin host binary + library
+│   ├── src/bin/        # DAW binaries, including maolan-plugin-host
 │   ├── src/            # Main GUI application, CLI binaries, state, workspace UI
 │   ├── assets/         # Desktop files, fonts, icons, and images
 │   ├── scripts/        # Linux build scripts and Windows PowerShell build script
@@ -66,7 +66,7 @@ waveform editor is in `editor/`, and the project website is in `site/`.
   Plugins are hosted out-of-process for crash isolation. AU plugin identifiers are
   fourcc triples (`au:<type>:<subtype>:<manufacturer>`, e.g. `au:aufx:dely:appl`),
   discovered via the system `AudioComponent` registry, and hosted behind an `AuUnit`
-  trait in `maolan/plugin-host/src/au/` with two backends: `au/v2.rs` (pure C
+  trait in `plugin-host/src/au/` with two backends: `au/v2.rs` (pure C
   AudioUnit) and `au/v3.rs` (`AUAudioUnit`, hand-rolled ObjC FFI). The v2/v3
   dispatch keys off `kAudioComponentFlag_IsV3AudioUnit` in the component flags.
 - **Plugin UI embedding:** X11 on Unix, HWND `SetParent` on Windows.
@@ -169,7 +169,7 @@ cd baseview && cargo build && cargo test --all-targets
   cargo clippy --all-targets -- -D warnings
   cargo test --all-targets
   ```
-- Some tests are platform-gated (for example `maolan/plugin-host/tests/windows_clap_load.rs`
+- Some tests are platform-gated (for example `plugin-host/tests/windows_clap_load.rs`
   is `#![cfg(all(test, windows))]`).
 - Some plugin tests in `plugins/tests/synth_dsp.rs` exercise the synthesizer
   DSP and assert on signal properties such as finite output, pitch, and filter
@@ -256,7 +256,7 @@ update this root file if you change cross-cutting conventions.
   `../engine` (and a path dependency on `../pitch`) for cross-crate
   development. Remove the patch section and publish `maolan-engine` before
   publishing `maolan`.
-- `engine/` and `maolan/plugin-host/` both build against the local
+- `engine/` and `plugin-host/` both build against the local
   `plugin-protocol/` via a path dependency (AU support needs protocol
   VERSION 8, unpublished). Publish `maolan-plugin-protocol` 0.0.18+ before
   publishing either crate, and keep the DAW and `maolan-plugin-host` deployed

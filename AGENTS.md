@@ -236,7 +236,10 @@ update this root file if you change cross-cutting conventions.
 - **Windows:** `maolan/scripts/build.ps1` and `plugins/build.ps1` install
   dependencies, build release binaries, and produce NSIS installers.
 - **Linux packaging:** `maolan/scripts/build-ubuntu.sh`, `build-debian.sh`, and
-  `build-fedora.sh` build distribution packages.
+  `build-fedora.sh` build distribution packages. The `maolan`, `editor`, and
+  `plugins` release workflows also build `.deb`/`.rpm` packages via `cargo-deb`
+  and `cargo-generate-rpm` (metadata in each crate's `Cargo.toml`); the plugins
+  packages install the CLAP library as `/usr/lib/clap/Maolan.clap`.
 - **macOS packaging:** `maolan/scripts/build-mac.sh` builds the release
   binaries, assembles a signed `Maolan.app` bundle, and produces a `.dmg`
   disk image (ad-hoc signed by default; pass `-c` for a Developer ID).

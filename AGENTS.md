@@ -73,7 +73,8 @@ waveform editor is in `editor/`, and the project website is in `site/`.
 - **AI / ML:** Burn 0.21.0 with `ndarray` and `wgpu` backends; `hf-hub` for
   model download; `safetensors` / `burnpack` for model artifacts.
 - **Audio processing helpers:** `rubato` (resampling), `timestretch` (time/pitch),
-  `wide` (SIMD), `rustfft`, `rayon`. Import/export codecs are pure Rust
+  `fearless_simd` + `fearless_simd_macros` (portable SIMD in `engine`, runtime
+  x86 dispatch, NEON on aarch64), `rustfft`, `rayon`. Import/export codecs are pure Rust
   (`oxideav-*`, `symphonia`); no FFmpeg dependency.
 - **Website:** Static HTML/CSS (`site/`).
 

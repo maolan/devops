@@ -61,7 +61,8 @@ waveform editor is in `editor/`, and the project website is in `site/`.
   - Linux: ALSA and JACK.
   - FreeBSD: JACK and OSS.
   - macOS: CoreAudio (audio) and CoreMIDI (MIDI).
-  - Windows: WASAPI.
+  - Windows: WASAPI and ASIO (device ids prefixed `asio:<driver name>`,
+    hosted by the pure-Rust `maolan-asio` crate in `asio/`).
 - **Plugin formats:** CLAP, VST3, LV2 (Unix only), AudioUnit AUv2 + AUv3 (macOS only).
   Plugins are hosted out-of-process for crash isolation. AU plugin identifiers are
   fourcc triples (`au:<type>:<subtype>:<manufacturer>`, e.g. `au:aufx:dely:appl`),

@@ -71,7 +71,7 @@ waveform editor is in `editor/`, and the project website is in `site/`.
   AudioUnit) and `au/v3.rs` (`AUAudioUnit`, hand-rolled ObjC FFI). The v2/v3
   dispatch keys off `kAudioComponentFlag_IsV3AudioUnit` in the component flags.
 - **Plugin UI embedding:** X11 on Unix, HWND `SetParent` on Windows.
-- **AI / ML:** Burn 0.21.0 with `ndarray` and `wgpu` backends; `hf-hub` for
+- **AI / ML:** Burn 0.22.0 with `flex` and `wgpu` backends; `hf-hub` for
   model download; `safetensors` / `burnpack` for model artifacts.
 - **Audio processing helpers:** `rubato` (resampling), `timestretch` (time/pitch),
   `fearless_simd` + `fearless_simd_macros` (portable SIMD in `engine`, runtime
